@@ -34,12 +34,12 @@ CustomerLanding_node1 = glueContext.create_dynamic_frame.from_options(
 )
 
 # Script generated for node Apply Filter
-SqlQuery148 = """
+SqlQuery0 = """
 select * from myDataSource where sharewithresearchasofdate is null
 """
 ApplyFilter_node2 = sparkSqlQuery(
     glueContext,
-    query=SqlQuery148,
+    query=SqlQuery0,
     mapping={"myDataSource": CustomerLanding_node1},
     transformation_ctx="ApplyFilter_node2",
 )
@@ -48,12 +48,11 @@ ApplyFilter_node2 = sparkSqlQuery(
 TrustedCustomerZone_node3 = glueContext.write_dynamic_frame.from_options(
     frame=ApplyFilter_node2,
     connection_type="s3",
-    format="glueparquet",
+    format="json",
     connection_options={
         "path": "s3://hungnq-lake-house/customer/trusted/",
         "partitionKeys": [],
     },
-    format_options={"compression": "gzip"},
     transformation_ctx="TrustedCustomerZone_node3",
 )
 
